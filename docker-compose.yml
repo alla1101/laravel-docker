@@ -1,0 +1,36 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: app.Dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./otlbly-backend:/var/www
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=database"
+    links:
+      - database:database
+  web:
+    build:
+      context: ./
+      dockerfile: web.Dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./otlbly-backend:/var/www
+    ports:
+      - 8080:80
+    links:
+      - app:app
+  database:
+    image: mysql:5.6
+    volumes:
+      - ./dbdata:/var/lib/mysql/homestead
+    environment:
+      - "MYSQL_DATABASE=homestead"
+      - "MYSQL_USER=homestead"
+      - "MYSQL_PASSWORD=secret"
+      - "MYSQL_ROOT_PASSWORD=secret"
+    ports:
+        - "33061:3306"
