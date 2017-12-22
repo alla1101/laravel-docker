@@ -5,10 +5,10 @@ requirements:  docker-compose
 
 usage:
 
-<to start> docker-compose up
-<to stop> docker-compose stop
-<to execute a composer command> docker-compose exec app php composer
-<to execute a artisan command> docker-compose exec app php artisan list
+start: docker-compose up
+stop: docker-compose stop
+execute a composer command: docker-compose exec app php composer
+execute a artisan command: docker-compose exec app php artisan list
 
 thanks and good night
 
