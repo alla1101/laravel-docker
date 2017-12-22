@@ -1,6 +1,6 @@
 # laravel-docker
 requirements:  docker-compose
-			   change the volume in docker-compose to a new file where your project is.
+			   change the volume in docker-compose to a new folder where your project is.
 
 
 usage:
