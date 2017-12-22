@@ -7,7 +7,7 @@ usage:
 
 start: docker-compose up
 stop: docker-compose stop
-execute a composer command: docker-compose exec app php composer
+execute a composer command: docker-compose exec app composer
 execute a artisan command: docker-compose exec app php artisan list
 
 thanks and good night
