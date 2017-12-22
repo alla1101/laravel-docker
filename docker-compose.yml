@@ -6,7 +6,7 @@ services:
       dockerfile: app.Dockerfile
     working_dir: /var/www
     volumes:
-      - ./otlbly-backend:/var/www
+      - ./Laravel:/var/www
     environment:
       - "DB_PORT=3306"
       - "DB_HOST=database"
@@ -18,7 +18,7 @@ services:
       dockerfile: web.Dockerfile
     working_dir: /var/www
     volumes:
-      - ./otlbly-backend:/var/www
+      - ./Laravel:/var/www
     ports:
       - 8080:80
     links:
@@ -26,7 +26,7 @@ services:
   database:
     image: mysql:5.6
     volumes:
-      - ./dbdata:/var/lib/mysql/homestead
+      - ./dbdata:/var/lib/mysql
     environment:
       - "MYSQL_DATABASE=homestead"
       - "MYSQL_USER=homestead"
