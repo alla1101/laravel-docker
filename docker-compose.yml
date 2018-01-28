@@ -12,6 +12,8 @@ services:
       - "DB_HOST=database"
     links:
       - database:database
+      - redis:redis
+      - memcached:memcached
   web:
     build:
       context: ./
@@ -34,3 +36,9 @@ services:
       - "MYSQL_ROOT_PASSWORD=secret"
     ports:
         - "33061:3306"
+  memcached:
+    image: memcached
+  redis:
+    image: redis
+    volumes: 
+      - ./redis_data:/data
