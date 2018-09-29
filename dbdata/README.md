@@ -1,1 +1,0 @@
-this is a file to stare the data of the project
