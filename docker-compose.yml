@@ -6,39 +6,64 @@ services:
       dockerfile: app.Dockerfile
     working_dir: /var/www
     volumes:
-      - ./Laravel:/var/www
+      - ./Lumen:/var/www
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - "DB_PORT=3306"
       - "DB_HOST=database"
     links:
       - database:database
-      - redis:redis
-      - memcached:memcached
+      - mongodb:mongodb
+    networks:
+      - front
   web:
     build:
       context: ./
       dockerfile: web.Dockerfile
     working_dir: /var/www
     volumes:
-      - ./Laravel:/var/www
+      - ./Lumen:/var/www
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 8080:80
     links:
       - app:app
+    networks:
+      - front
   database:
-    image: mysql:5.6
+    image: mysql:5.7.21
     volumes:
       - ./dbdata:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - "MYSQL_DATABASE=homestead"
       - "MYSQL_USER=homestead"
       - "MYSQL_PASSWORD=secret"
       - "MYSQL_ROOT_PASSWORD=secret"
     ports:
-        - "33061:3306"
-  memcached:
-    image: memcached
-  redis:
-    image: redis
-    volumes: 
-      - ./redis_data:/data
+        - 33061:3306
+    networks:
+      - front
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+
+    volumes:
+      - ./mongodb:/data/db
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 27017:27017
+    networks:
+      - front
+networks:
+  front:
+    driver: bridge
+    ipam:
+        driver: default
+        config:
+          - subnet: "192.168.10.0/24"
+
