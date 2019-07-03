@@ -4,7 +4,7 @@ RUN apt-get update
 
 RUN apt-get install -y libmcrypt-dev \
     libmagickwand-dev --no-install-recommends \
-    && docker-php-ext-install pdo pdo_mysql mysqli 
+    && docker-php-ext-install pdo pdo_mysql mysqli dom
 
 RUN apt-get install -y zip unzip cron openssl nano libcurl4-openssl-dev pkg-config libssl-dev
 
